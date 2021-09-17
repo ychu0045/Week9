@@ -1,0 +1,62 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Covid-19 New Cases in Malaysia (31 August 2021)",
+    "width": 800,
+    "height": 600,
+    "projection": {
+        "type": "equalEarth"
+    },
+    "data": {
+        "url": "https://raw.githubusercontent.com/ychu0045/Week9/main/js/malaysia_singapore_brunei_administrative_malaysia_state_province_boundary.json",
+        "format": {
+            "type": "topojson",
+            "feature": "malaysia_singapore_brunei_administrative_malaysia_state_province_boundary"
+        }
+    },
+    "transform": [
+        {
+            "lookup": "properties.name",
+            "from": {
+                "data": {
+                    "url": "https://raw.githubusercontent.com/ychu0045/Week9/main/data/cases_state_31_08_2021.csv"
+                },
+                "key": "state",
+                "fields": [
+                    "cases_new",
+                    "population"
+                ]
+            }
+        },
+        {
+            "calculate": "datum.cases_new/datum.population * 10000",
+            "as": "New cases per 10,000 population"
+        }
+    ],
+    "mark": {
+        "type": "geoshape",
+        "stroke": "white"
+    },
+    "encoding": {
+        "color": {
+            "field": "New cases per 10,000 population",
+            "type": "quantitative"
+        },
+        "tooltip": [
+            {
+                "field": "properties.name",
+                "type": "nominal",
+                "title": "State"
+            },
+            {
+                "field": "cases_new",
+                "type": "quantitative",
+                "title": "New cases"
+            },
+            {
+                "field": "New cases per 10,000 population",
+                "type": "quantitative",
+                "format": ".2f"
+            }
+        ]
+    }
+}
