@@ -39,7 +39,23 @@
     "encoding": {
         "color": {
             "field": "New cases per 10,000 population",
-            "type": "quantitative"
+            "type": "quantitative",
+            "scale": {
+                "type": "threshold",
+                "domain": [
+                    2,
+                    4,
+                    6,
+                    8
+                ],
+                "range": [
+                    "#dbf1b4",
+                    "#94d5b9",
+                    "#45b4c2",
+                    "#2182b8",
+                    "#23479c"
+                ]
+            }
         },
         "tooltip": [
             {
